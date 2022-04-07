@@ -1,13 +1,13 @@
 const mongo = require('mongodb');
 
-let client = new mongo.MongoClient("mongodb+srv://dbUser:"+encodeURIComponent(process.env.dbpass)+"@cluster0.4hkct.mongodb.net/db?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+let client = new mongo.MongoClient(process.env.connection_string, { useNewUrlParser: true, useUnifiedTopology: true })
 
 async function getDb() {
   await client.connect();
   return client.db('db');
-},
+}
 
-let db = mongo.getDb();
+let db = getDb();
 db.then((db) => {collection = db.collection("collection"); 
 });
 

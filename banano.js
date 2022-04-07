@@ -2,11 +2,13 @@
 const bananojs = require("@bananocoin/bananojs");
 const config = require("./config.js");
 
+bananojs.setBananodeApiUrl('https://kaliumapi.appditto.com/api');
+
 const seed = process.env.seed;
 
-async function send_banano(addr, amount) {
+async function send_banano(address, amount) {
   try {
-    await bananojs.sendBananoWithdrawalFromSeed(process.env.seed, 0, addr, amount);
+    await bananojs.sendBananoWithdrawalFromSeed(seed, 0, address, amount);
     return true;
   } catch (e) {
     return false;
@@ -14,13 +16,13 @@ async function send_banano(addr, amount) {
 }
 
 
-async function get_account_history(addr) {
-  let account_history = await bananojs.getAccountHistory(addr, -1);
+async function get_account_history(address) {
+  let account_history = await bananojs.getAccountHistory(address, -1);
   return account_history.history;
 }
 
-async function check_bal(addr) {
-  let raw_bal = await bananojs.getAccountBalanceRaw(addr);
+async function check_bal(address) {
+  let raw_bal = await bananojs.getAccountBalanceRaw(address);
   let bal_parts = await bananojs.getBananoPartsFromRaw(raw_bal);
   return Number(bal_parts.banano)+(Number(bal_parts.banoshi)/100)
 }
@@ -53,13 +55,13 @@ async function is_unopened(address) {
 }
  
 async function receive_deposits() {
-  let rep = await bananojs.getAccountInfo(await bananojs.getBananoAccountFromSeed(process.env.seed, 0), true);
+  let rep = await bananojs.getAccountInfo(await bananojs.getBananoAccountFromSeed(seed, 0), true);
   rep = rep.representative;
   if (!rep) {
     //set self as rep if no other set rep
-    await bananojs.receiveBananoDepositsForSeed(process.env.seed, 0, await bananojs.getBananoAccountFromSeed(process.env.seed, 0));
+    await bananojs.receiveBananoDepositsForSeed(seed, 0, await bananojs.getBananoAccountFromSeed(seed, 0));
   }
-  await bananojs.receiveBananoDepositsForSeed(process.env.seed, 0, rep);
+  await bananojs.receiveBananoDepositsForSeed(seed, 0, rep);
 }
 
 async function is_valid(address) {
