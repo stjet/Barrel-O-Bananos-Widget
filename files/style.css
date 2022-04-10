@@ -26,7 +26,7 @@ body, html {
 #all-contents {
   height: 100vh;
   width: 100vh;
-  background-color: 5750aa;
+  background-color: #5750aa;
   border-radius: 9px;
   border: 2px solid #262626;
 }
@@ -48,7 +48,7 @@ body, html {
   width: 100%;
 }
 
-#address {
+#address-initial {
   width: 98%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -56,17 +56,17 @@ body, html {
   font-family: "Montserrat Regular";
 }
 
-#button-container {
+.button-container {
   width: 98%;
   margin: 1%;
   height: 10%;
 }
 
-#button-container input[type=button]:first-child {
+.button-container input[type=button]:first-child {
   margin-right: 3vh;
 }
 
-input[type=button] {
+input[type=button], input[type=submit] {
   cursor: pointer;
   width: 48.4%;
   height: 100%;
@@ -78,13 +78,13 @@ input[type=button] {
   background-color: #faed4b;
 }
 
-#info-container {
+#info-container, #claim-info-container {
   background-color: #bbd0ff;
   border-radius: 5px;
   padding: 5px;
 }
 
-#info {
+#info, #claim-info {
   font-family: "Montserrat Regular";
   font-size: 11px;
   margin: 0;
@@ -102,7 +102,7 @@ input[type=button] {
   color: #4db500;
 }
 
-#give-button {
+.give-button, #submit-claim, #form-to-initial {
   color: #186604;
 }
 
@@ -113,4 +113,35 @@ input[type=button] {
 
 #footer a {
   color: white;
+}
+
+#image-container img {
+  width: 100%;
+}
+
+#image-text {
+  margin-bottom: -80px;
+}
+
+#superimposed-text {
+  font-family: "VCR OSD Mono";
+  font-size: 11px;
+  float: right;
+  width: 50%;
+  position: relative;
+  top: 110px;
+}
+
+#address-in-info {
+  color: white;
+}
+
+.error-red {
+  background-color: red !important;
+  color: white;
+}
+
+.claimed-green {
+  color: 186604;
+  background-color: b2ff73;
 }

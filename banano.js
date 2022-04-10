@@ -6,7 +6,7 @@ bananojs.setBananodeApiUrl('https://kaliumapi.appditto.com/api');
 
 const seed = process.env.seed;
 
-async function send_banano(address, amount) {
+async function send(address, amount) {
   try {
     await bananojs.sendBananoWithdrawalFromSeed(seed, 0, address, amount);
     return true;
@@ -14,7 +14,6 @@ async function send_banano(address, amount) {
     return false;
   }
 }
-
 
 async function get_account_history(address) {
   let account_history = await bananojs.getAccountHistory(address, -1);
@@ -69,7 +68,7 @@ async function is_valid(address) {
 }
 
 module.exports = {
-  send_banano: send_banano,
+  send: send,
   faucet_dry: faucet_dry,
   check_bal: check_bal,
   receive_deposits: receive_deposits,

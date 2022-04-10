@@ -15,6 +15,10 @@ An easily forkable and configurable Banano faucet widget for YOUR site! Increase
 
 ## Secrets (.env files!) Documentation
 
-**SEED**: Banano seed
+All these should be stored securely in an .env file. Do not commit these or put them anywhere that can be accessed publically.
 
-Hcaptcha secret, 
+**seed**: Banano seed
+
+**hcaptcha secret**: Secret for hcaptcha
+
+**connection_string**: Full connection string for mongodb

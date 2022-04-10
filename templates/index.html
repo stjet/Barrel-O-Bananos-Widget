@@ -1,4 +1,4 @@
-<!-- To restrict unauthorized iframing https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-->
+<!--Currently has problems when smalelr than 375 pixels-->
 <html>
   <head>
     <meta charset="utf-8">
@@ -12,17 +12,41 @@
     <div id="all-contents">
       <h1 id="title">Barrel O' Bananos</h1>
       <div id="container">
-        <img src="/bam.png" id="monkey-talk"/>
-        <input type="text" id="address" name="address" placeholder="banano address here ban_1example42cool19..."/>
-        <div id="button-container">
-          <input type="button" value="GET BANANO" id="get-button">
-          <input type="button" value="GIVE BANANO" id="give-button">
+        <div id="image-container">
+          <div id="image-text">
+            <p id="superimposed-text">Hey there friend, need some potassium?<br> Enter your banano address below and click 'GET BANANO' for FREE banano coins!</p>
+          </div>
+          <img src="/bam.png" id="bam"/>
         </div>
-        <div id="info-container">
-          <p id="info">This widget gives free banano cryptocurrency to promote crypto literacy in a fun and casual way. Banano is feeless, instant and rich in potassium. Visit <a href="https://banano.how?src=barrel" target="_blank" rel="noopener noreferrer">banano.how</a> to learn more.</p>
+        <div id="initial-container">
+          <input type="text" id="address-initial" name="address-initial" placeholder="banano address here ban_1example42cool19..."/>
+          <div class="button-container">
+            <input type="button" value="GET BANANO" id="get-button">
+            <input type="button" value="GIVE BANANO" class="give-button">
+          </div>
+          <div id="info-container">
+            <p id="info">This widget gives free banano cryptocurrency to promote crypto literacy in a fun and casual way. Banano is feeless, instant and rich in potassium. Visit <a href="https://banano.how?src=barrel" target="_blank" rel="noopener noreferrer">banano.how</a> to learn more.</p>
+          </div>
         </div>
-        <div id="captcha" style="display:none;">
+        <div id="captcha-and-form" style="display:none;">
           <!--Captcha widget and hidden address, this should be a form-->
+          <form method="POST" action="/">
+            <input type="hidden" id="address" name="address"/>
+            <div class="h-captcha" data-sitekey="{{ sitekey }}"></div>
+            <div class="button-container">
+              <input type="submit" value="CONTINUE" id="submit-claim">
+              <input type="button" value="GO BACK" id="form-to-initial">
+            </div>
+          </form>
+        </div>
+        <div id="claim-screen" style="display:none;">
+          <div class="button-container">
+            <input type="button" id="claim-button">
+            <input type="button" value="GIVE BANANO" class="give-button">
+          </div>
+          <div id="claim-info-container">
+            <p id="claim-info"></p>
+          </div>
         </div>
         <div id="footer">
           <span id="credit">Built by <a href="https://prussia.dev" target="_blank" rel="noopener noreferrer">Prussia</a> + <a href="https://www.devinmontes.com/" target="_blank" rel="noopener noreferrer"> Devin Montes</a></span>
@@ -31,8 +55,53 @@
       </div>
     </div>
     <script>
+      //if less than 375 pixels tall, add 5 to marginbottom?
+      function set_text_offset() {
+        document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height)+"px";
+      }
+      document.body.onload = set_text_offset;
+      window.onresize = set_text_offset;
+      function toggle_visibility(hide_div, show_div) {
+        document.getElementById(hide_div).style.display = "none";
+        document.getElementById(show_div).style.display = "block";
+        set_text_offset();
+      }
       //on click of get banano
-      //on click of give banano
+      document.getElementById("get-button").onclick = function() {
+        document.getElementById('superimposed-text').innerHTML = "Alrighty, let me fetch your bananos.<br>Wait a sec... not a robot are you? Take this test. If you aren't a bot, it should be NO PROBLEM!";
+        document.getElementById("address").value = document.getElementById("address-initial").value;
+        toggle_visibility("initial-container", "captcha-and-form");
+      }
     </script>
+    {% if errors %}
+      <script>
+        function after_post() {
+          document.getElementById('superimposed-text').innerHTML = "Hmm. That didn't work.<br>Check the error message."
+          let errors = {{ errors | dump | safe }};
+          //set claim screen with error is applicable
+          document.getElementById("claim-screen").style.display = "block";
+          document.getElementById("initial-container").style.display = "none";
+          let claim_button = document.getElementById('claim-button');
+          document.getElementById('claim-info').innerText = "Error: "+errors;
+          claim_button.value = "NOT CLAIMED";
+          claim_button.classList.add('error-red');
+        }
+        after_post();
+      </script>
+    {% elif claimed %}
+      <script>
+        function after_post() {
+          document.getElementById('superimposed-text').innerHTML = "Hahaha, first time? Struggled a bit there. Could you be a robot? Just teasing.<br>Come back tomorrow for more, or donate some to help out."
+          toggle_visibility("initial-container", "claim-screen");
+          let claim_button = document.getElementById('claim-button');
+          claim_button.value = "CLAIMED";
+          claim_button.classList.add('claimed-green');
+          let to_address = {{ to_address | dump | safe }};
+          let payout = {{ payout | dump | safe }};
+          document.getElementById('claim-info').innerHTML = String(payout)+" Banano sent to <span class='address-in-info'>"+to_address+"</span><br>You can claim again in 24 hours"
+        }
+        after_post();
+      </script>
+    {% endif %}
   </body>
 </html>
