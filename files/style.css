@@ -82,9 +82,10 @@ input[type=button], input[type=submit] {
   background-color: #bbd0ff;
   border-radius: 5px;
   padding: 5px;
+  overflow-wrap: break-word;
 }
 
-#info, #claim-info {
+#info, #claim-info, #give-info {
   font-family: "Montserrat Regular";
   font-size: 11px;
   margin: 0;
@@ -127,12 +128,12 @@ input[type=button], input[type=submit] {
   font-family: "VCR OSD Mono";
   font-size: 11px;
   float: right;
-  width: 50%;
+  width: 53%;
   position: relative;
   top: 110px;
 }
 
-#address-in-info {
+.address-in-info {
   color: white;
 }
 
@@ -142,6 +143,95 @@ input[type=button], input[type=submit] {
 }
 
 .claimed-green {
-  color: 186604;
-  background-color: b2ff73;
+  color: #186604;
+  background-color: #b2ff73 !important;
+}
+
+#give-screen {
+  margin-top: 10px;
+}
+
+#qr-code-container {
+  float: left;
+  width: 35%;
+}
+
+#other-part {
+  float: left;
+  width: 55%;
+}
+
+#qr-code-container {
+  margin-right: 5%;
+}
+
+#qr-code-container img {
+  width: 100%;
+}
+
+#give-button-container {
+  height: 10%;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#give-button-container #give-to-initial {
+  width: 100% !important;
+}
+
+#give-info-container {
+  background-color: #bbd0ff;
+  border-radius: 5px;
+  padding: 5px;
+  overflow-wrap: break-word;
+}
+
+#give-button-container input {
+  width: 100%;
+}
+
+.go-back {
+  color: #186604;
+}
+
+@media screen and (max-width: 250px), screen and (max-height: 250px) {
+  input[type=button], input[type=submit] {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 305px), screen and (max-height: 305px) {
+  #address-initial {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  #info-banano-optional {
+    display: none;
+  }
+  input[type=button], input[type=submit] {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 500px) and (min-height: 500px) {
+  #other-part {
+    width: 57%;
+  }
+  #superimposed-text {
+    font-size: 12px;
+  }
+  #info, #claim-info, #give-info {
+    font-size: 12px;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  #all-contents {
+    height: 100vw;
+    width: 100vw;
+  }
+  .button-container input[type=button]:first-child {
+    margin-right: 3vw;
+  }
 }

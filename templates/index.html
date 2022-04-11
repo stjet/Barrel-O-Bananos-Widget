@@ -1,4 +1,3 @@
-<!--Currently has problems when smalelr than 375 pixels-->
 <html>
   <head>
     <meta charset="utf-8">
@@ -25,19 +24,32 @@
             <input type="button" value="GIVE BANANO" class="give-button">
           </div>
           <div id="info-container">
-            <p id="info">This widget gives free banano cryptocurrency to promote crypto literacy in a fun and casual way. Banano is feeless, instant and rich in potassium. Visit <a href="https://banano.how?src=barrel" target="_blank" rel="noopener noreferrer">banano.how</a> to learn more.</p>
+            <p id="info">This widget gives free banano cryptocurrency to promote crypto literacy in a fun and casual way. <span id="info-banano-optional">Banano is feeless, instant and rich in potassium.</span> Visit <a href="https://banano.how?src=barrel" target="_blank" rel="noopener noreferrer">banano.how</a> to learn more.</p>
           </div>
         </div>
         <div id="captcha-and-form" style="display:none;">
           <!--Captcha widget and hidden address, this should be a form-->
           <form method="POST" action="/">
             <input type="hidden" id="address" name="address"/>
-            <div class="h-captcha" data-sitekey="{{ sitekey }}"></div>
+            <div class="h-captcha" data-sitekey="{{ sitekey }}" style="margin-left: 1%;"></div>
             <div class="button-container">
               <input type="submit" value="CONTINUE" id="submit-claim">
-              <input type="button" value="GO BACK" id="form-to-initial">
+              <input type="button" value="GO BACK" class="go-back" id="captcha-and-form-to-initial-container">
             </div>
           </form>
+        </div>
+        <div id="give-screen" style="display:none;">
+          <div id="qr-code-container">
+            <img src="/qrcode.png"></img>
+          </div>
+          <div id="other-part">
+            <div id="give-info-container">
+              <p id="give-info">{{ faucet_address }}</p>
+            </div>
+            <div id="give-button-container">
+              <input type="button" value="GO BACK" class="go-back" id="give-screen-to-initial-container">
+            </div>
+          </div>
         </div>
         <div id="claim-screen" style="display:none;">
           <div class="button-container">
@@ -55,9 +67,17 @@
       </div>
     </div>
     <script>
-      //if less than 375 pixels tall, add 5 to marginbottom?
       function set_text_offset() {
-        document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height)+"px";
+        if (document.body.scrollHeight < 335 || document.body.scrollWidth < 335) {
+          document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height+40)+"px";
+        } else if (document.body.scrollHeight < 350 || document.body.scrollWidth < 355) {
+          document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height+27)+"px";
+        } else if (document.body.scrollHeight < 375 || document.body.scrollWidth < 375) {
+          //if less than 375 pixels tall, add 5 more from marginbottom?
+          document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height+14)+"px";
+        } else {
+          document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height)+"px";
+        }
       }
       document.body.onload = set_text_offset;
       window.onresize = set_text_offset;
@@ -72,12 +92,33 @@
         document.getElementById("address").value = document.getElementById("address-initial").value;
         toggle_visibility("initial-container", "captcha-and-form");
       }
+      Array.from(document.getElementsByClassName("give-button")).forEach(function(value, index, arr) {
+        //gets the parent of the parent of the button
+        value.onclick = function() {
+          document.getElementById('superimposed-text').innerHTML = "Wow thank you generous monkey! Send BAN using the qr code or address below.<br>Your donation help keeps the stand running. YIPEE!";
+          toggle_visibility(value.parentNode.parentNode.id, 'give-screen');
+        }
+      });
+      Array.from(document.getElementsByClassName("go-back")).forEach(function(value, index, arr) {
+        value.onclick = function() {
+          let parts = value.id.split('-to-');
+          let hide = parts[0];
+          let show = parts[1];
+          //for now the 'show' appears to always be the initial container. can change to dictionary later
+          document.getElementById('superimposed-text').innerHTML = "Hey there friend, need some potassium?<br> Enter your banano address below and click 'GET BANANO' for FREE banano coins!";
+          toggle_visibility(hide, show);        }
+      });
     </script>
     {% if errors %}
       <script>
         function after_post() {
           document.getElementById('superimposed-text').innerHTML = "Hmm. That didn't work.<br>Check the error message."
           let errors = {{ errors | dump | safe }};
+          if (errors == "Faucet dry") {
+            document.getElementById('superimposed-text').innerHTML = "Oh bana-NO! It looks like I'm all out of coins at the moment...<br>Come back later, or consider giving some ban <3";
+            toggle_visibility('initial-container', 'give-screen');
+            return;
+          }
           //set claim screen with error is applicable
           document.getElementById("claim-screen").style.display = "block";
           document.getElementById("initial-container").style.display = "none";
