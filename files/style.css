@@ -26,9 +26,15 @@ body, html {
 #all-contents {
   height: 100vh;
   width: 100vh;
-  background-color: #5750aa;
+  background-color: #87a2ff;
   border-radius: 9px;
   border: 2px solid #262626;
+}
+
+@media (prefers-color-scheme: dark) {
+  #all-contents {
+    background-color: #5750aa;
+  }
 }
 
 #title {
@@ -83,6 +89,7 @@ input[type=button], input[type=submit] {
   border-radius: 5px;
   padding: 5px;
   overflow-wrap: break-word;
+  margin-left: 1%;
 }
 
 #info, #claim-info, #give-info {
@@ -206,11 +213,14 @@ input[type=button], input[type=submit] {
     padding-top: 0px;
     padding-bottom: 0px;
   }
-  #info-banano-optional {
-    display: none;
-  }
   input[type=button], input[type=submit] {
     font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 305px), screen and (max-height: 305px) {
+  #info-banano-optional {
+    display: none;
   }
 }
 
