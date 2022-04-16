@@ -81,7 +81,7 @@ body, html {
   height: 10%;
 }
 
-.button-container input[type=button]:first-child {
+.button-container input[type=button]:first-child, .button-container input[type=submit]:first-child  {
   margin-right: 3vh;
 }
 
