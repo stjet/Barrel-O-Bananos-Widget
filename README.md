@@ -17,7 +17,7 @@ If you have any problems, please open an github issue.
 
 Run your own instance and then embed using an iframe. Make sure iframe height and width are equal. Designed for smaller embeds but is still very much functional for bigger ones.
 
-Example: 
+Example:
 ```html
 <iframe src="https://<yourbarrelobananosinstance.com>" style="height: 25vw; width: 25vw;" style="border: none;"></iframe>
 ```
@@ -28,6 +28,8 @@ Example:
 
 Obviously you can mess with the height and width properties in the example.
 
+In small sizes, the captcha popup will make the iframe scrollable. If that is not preferable, you can make a rectangular shape, something like 350x500 (500 being the height) to prevent that. Of course, this will result it more vertical space being taken up.
+
 ## Secrets (.env files!) Documentation
 
 All these should be stored securely in an .env file. Do not commit these or put them anywhere that can be accessed publically.
@@ -37,3 +39,5 @@ All these should be stored securely in an .env file. Do not commit these or put 
 **hcaptcha secret**: Secret for hcaptcha
 
 **connection_string**: Full connection string for mongodb
+
+*Commissioned by and designed by Devin from makeanything, programmed by Prussia/jetstream0*
