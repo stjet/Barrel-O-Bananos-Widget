@@ -1,6 +1,8 @@
 # Barrel O' Bananos
 An easily forkable and configurable Banano faucet widget for YOUR site! Increase traffic and get involved in the banano ecosystem.
 
+If you have any problems, please open an github issue.
+
 ## Config.json Documentation
 
 **address**: Address of the faucet
@@ -13,16 +15,18 @@ An easily forkable and configurable Banano faucet widget for YOUR site! Increase
 
 ## Embedding Documentation
 
-Run your own instance and then embed using an iframe. Make sure iframe height and width are equal. Designed for smaller embeds but is functional for bigger ones.
+Run your own instance and then embed using an iframe. Make sure iframe height and width are equal. Designed for smaller embeds but is still very much functional for bigger ones.
 
 Example: 
 ```html
-<iframe src="https://<yourbarrelobananosinstance.com>" style="height: 25vw; width: 25vw;" scrolling="no"></iframe>
+<iframe src="https://<yourbarrelobananosinstance.com>" style="height: 25vw; width: 25vw;" style="border: none;"></iframe>
 ```
+
+280x280 is the smallest size embedabble. Any smaller than that is too small.
 
 /files/embed.html has examples of the embeds at various sizes.
 
-Obviously you can mess with the height and width.
+Obviously you can mess with the height and width properties in the example.
 
 ## Secrets (.env files!) Documentation
 

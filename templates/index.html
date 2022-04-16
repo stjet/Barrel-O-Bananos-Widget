@@ -67,6 +67,14 @@
       </div>
     </div>
     <script>
+      if (document.body.scrollHeight < 500 || document.body.scrollWidth < 500) {
+        let hcaptcha_ele = Array.from(document.getElementsByClassName('h-captcha'))[0];
+        hcaptcha_ele.style.transform = "scale(0.8)";
+        hcaptcha_ele.style.transformOrigin = "0 0";
+        hcaptcha_ele.style.webkitTransform = "scale(0.8)";
+        hcaptcha_ele.style.WebkitTransformOrigin = "0 0";
+        hcaptcha_ele.style.marginBottom = "-15px";
+      }
       function set_text_offset() {
         if (document.body.scrollHeight < 335 || document.body.scrollWidth < 335) {
           document.getElementById('image-text').style.marginBottom = "-"+String(document.getElementById('superimposed-text').getBoundingClientRect().height+40)+"px";

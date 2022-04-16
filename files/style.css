@@ -21,11 +21,24 @@
 body, html {
   margin: 0;
   padding: 0;
+  border: none;
+}
+
+@media screen and (orientation: portrait) {
+  body, html {
+    height: 100vw;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  body, html {
+    width: 100vh;
+  }
 }
 
 #all-contents {
-  height: 100vh;
-  width: 100vh;
+  height: calc(99vh - 2px);
+  width: calc(99vh - 2px);
   background-color: #87a2ff;
   border-radius: 9px;
   border: 2px solid #262626;
@@ -74,7 +87,7 @@ body, html {
 
 input[type=button], input[type=submit] {
   cursor: pointer;
-  width: 48.4%;
+  width: 48%;
   height: 100%;
   float: left;
   font-family: "Montserrat Bold";
@@ -238,8 +251,8 @@ input[type=button], input[type=submit] {
 
 @media screen and (orientation: portrait) {
   #all-contents {
-    height: 100vw;
-    width: 100vw;
+    height: calc(99vw - 2px);
+    width: calc(99vw - 2px);
   }
   .button-container input[type=button]:first-child {
     margin-right: 3vw;

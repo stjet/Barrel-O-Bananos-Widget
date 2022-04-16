@@ -30,10 +30,8 @@ app.get('/', async function(req, res) {
   if (config.allowed_site != "*") {
     res.set("Content-Security-Policy", "frame-ancestors 'self' "+config.allowed_site);
   }
-  let faucet_balance = await banano.check_bal(config.address);
   return res.send(nunjucks.render('index.html', {
     faucet_address: faucet_address,
-    faucet_balance: faucet_balance,
     sitekey: config.hcaptcha_sitekey,
     errors: false,
     claimed: false
