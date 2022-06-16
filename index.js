@@ -91,7 +91,7 @@ app.post('/', async function(req, res) {
   let claim_freq = config.claim_freq;
   let db_resp = await database.find(address);
   if (db_resp) {
-    if (db_resp.last_claim+claim_freq > Date.now()) {
+    if (Number(db_resp.last_claim)+claim_freq > Date.now()) {
       return res.send(nunjucks.render('index.html', {
         faucet_address: faucet_address,
         sitekey: config.hcaptcha_sitekey,
