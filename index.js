@@ -120,7 +120,6 @@ app.post('/', async function(req, res) {
   //send
   let payout;
   let faucet_balance = await banano.check_bal(config.address);
-  console.log(faucet_balance)
   if (reduced) {
     payout = 0.02;
   } else {
@@ -136,7 +135,6 @@ app.post('/', async function(req, res) {
     }
   }
   let success = await banano.send(address, payout);
-  console.log(success, address, payout)
   if (!success) {
     return res.send(nunjucks.render('index.html', {
       faucet_address: faucet_address,

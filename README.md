@@ -13,6 +13,8 @@ If you have any problems, please open an github issue.
 
 **allowed_site**: Sites that should be allowed to embed. Put in a wildcard (`*`) to allow all sites to embed.
 
+Don't forget to replace the qr code in `/files/qrcode.png`
+
 ## Embedding Documentation
 
 Run your own instance and then embed using an iframe. Make sure iframe height and width are equal. Designed for smaller embeds but is still very much functional for bigger ones.
